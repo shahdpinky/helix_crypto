@@ -14,6 +14,7 @@ TRANSACTIONS = 'transactions/'
 MARKET = 'market/'
 
 
+# now can load up to T2 metrics
 class AddressesGN(Enum):
     # Address Activity
     active_addresses = ADDRESSES + 'active_count'  # T1
