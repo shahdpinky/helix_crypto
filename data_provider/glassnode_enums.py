@@ -56,6 +56,7 @@ class IndicatorsGN(Enum):
     difficulty_ribbon = INDICATORS + 'difficulty_ribbon'  # T1
     SOPR = INDICATORS + 'sopr'  # T1
     stock_to_flow_ratio = INDICATORS + 'stock_to_flow_ratio'  # T1
+    stock_to_flow_deflection = INDICATORS + 'stock_to_flow_deflection'  # T2
 
 
 class BlockchainGN(Enum):
