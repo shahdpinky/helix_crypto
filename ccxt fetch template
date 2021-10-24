@@ -1,0 +1,18 @@
+import ccxt
+import pandas as pd
+import time
+
+
+
+exchange = ccxt.binance()
+candles = exchange.fetch_ohlcv('ETH/USDT', timeframe='1d', limit=1500)
+# for candle in candles:
+#    print(candle)
+df_ETH = pd.DataFrame(candles, columns=['timestamp',
+                                     'open',
+                                     'high',
+                                     'low',
+                                     'close',
+                                     'volume'])
+df_ETH['timestamp'] = pd.to_datetime(df_ETH['timestamp'], unit='ms')
+print(df.tail())
