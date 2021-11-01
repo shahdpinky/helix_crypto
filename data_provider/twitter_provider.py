@@ -21,8 +21,8 @@ class MyStreamListener(tweepy.StreamListener):
 
     def on_data(self, data):
         data_dict = json.loads(data)
-        if (not data_dict['retweeted']) and ('RT @' not in data_dict['text']) and (
-                str(data_dict['user']['id']) in user_ids):
+        # if (not data_dict['retweeted']) and ('RT @' not in data_dict['text']) and (
+        if str(data_dict['user']['id']) in user_ids:
             output = f"{data_dict['created_at']}    {data_dict['user']['screen_name']}: {data_dict['text']}"
             print(output)
         return True
