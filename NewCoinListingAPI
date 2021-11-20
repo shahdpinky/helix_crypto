@@ -1,0 +1,14 @@
+# https://cryptocurrencyalerting.com/rest-api.html#post-alert-conditions-newcoin
+# Coin Listing Alert Example
+{
+  type: 'new_coin',
+  currency: 'ANY',
+  channel: { 'name': 'email' },
+  exchange: 'Binance'
+}
+
+# Curl example:
+curl -X POST https://api.cryptocurrencyalerting.com/v1/alert-conditions \
+-u API_TOKEN: \
+-H 'Content-Type: application/json' \
+-d '{"type":"new_coin", "currency":"ANY", "channel":{"name": "email"}, "exchange":"Binance"}'
