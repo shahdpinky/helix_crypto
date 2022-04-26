@@ -58,6 +58,10 @@ class IndicatorsGN(Enum):
     stock_to_flow_ratio = INDICATORS + 'stock_to_flow_ratio'  # T1
     stock_to_flow_deflection = INDICATORS + 'stock_to_flow_deflection'  # T2
     mvrv_account_based = INDICATORS + 'mvrv_account_based'
+    liveliness = INDICATORS + 'liveliness'  # T2
+    rhodl_ratio = INDICATORS + 'rhodl_ratio'  # T2
+    reserve_risk = INDICATORS + 'reserve_risk'  # T2
+    dormancy_flow = INDICATORS + 'dormancy_flow'  # T2
 
 
 class BlockchainGN(Enum):
@@ -101,6 +105,7 @@ class MarketGN(Enum):
     price_drawdown_from_ATH = MARKET + 'price_drawdown_relative'  # T1
     mvrv_ratio = MARKET + 'mvrv'
     mvrv_z_score = MARKET + 'mvrv_z_score'
+    price_realized_usd = MARKET + 'price_realized_usd'
 
     # class Entities(Enum):
     #     sending_count = 'sending_count'

@@ -1,11 +1,15 @@
-import tweepy  # use 3.10.0
-import json
 
-consumer_key = 'qKRFFvNNIUpScj7iQpL2ek46j'
-consumer_secret = '62zToE7CYBRf2XzHXZ2gLgiNcHc5EMrDD5RNEEqzriqYYvt0qg'
-bearer_token = 'AAAAAAAAAAAAAAAAAAAAAC8wVQEAAAAAnvokzWJQfmmwDKAs88YeIMhIBtw%3DvZeLO3cN0iI4rsL3LVjXnrrbApQn9QcU9ha3GC56FvMIHPWrjs'
-access_token = '1421219775389306881-NhdpWiB7cX13ZXBXvNGa7AEsXsb9tl'
-access_token_secret = 'sktF8EYNmkM9DtFHFNK6Ig58yrPHyVKOdPEfxIKEwVtJe'
+import json
+import os
+
+import backoff
+import tweepy
+
+consumer_key = 'jLJ3NjkfpbxRcXEHFcZqtnKmx'
+consumer_secret = 'rAnHN5JCAtaDqiTqw89FS4Zaj07HGfC5Ajs154oTa7Cy6uaqIq'
+bearer_token = 'AAAAAAAAAAAAAAAAAAAAAKDWawEAAAAA6umME4eN29IYIwlS6MUbfUSj%2Bks%3DY3sDH9GjKKJfxTtmTQbzPF1DHu1I3QKhUVxCr0jZCJYHYqdi2B'
+access_token = '1421219775389306881-Anuu22AzKYrzCX9hrdrymryk4mGmqu'
+access_token_secret = 'tcQ8hYRe1PhVXwBiHkysRSFnUVtM0g475BXP4Zb2BpkNq'
 
 
 class MyStreamListener(tweepy.StreamListener):
@@ -27,7 +31,32 @@ class MyStreamListener(tweepy.StreamListener):
             print(output)
         return True
 
-
+@backoff.on_exception(backoff.expo, (tweepy.error.RateLimitError))
+def get_friends(user):
+    data_folder = 'data/'
+    #create data folder if it does not exist
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+    #create user folder if it does not exist
+    if not os.path.exists('{}{}'.format(data_folder, user)):
+        os.makedirs('{}{}'.format(data_folder, user))
+    #check if friends file exists
+    if os.path.isfile('{}{}/friends.json'.format(data_folder, user)):
+        #read friends from disk
+        with open('{}{}/friends.json'.format(data_folder, user), 'r') as f:
+            friends = json.load(f)
+    else:
+        #get friends from twitter
+        try:
+            friends = api.friends_ids(user)
+        except tweepy.error.TweepError as e:
+            print(e)
+            friends = [user]
+        #write friends to disk
+        with open('{}{}/friends.json'.format(data_folder, user), 'w') as f:
+            json.dump(friends, f)
+    #print(friends)
+    return friends
 if __name__ == "__main__":
     myStreamListener = MyStreamListener()
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
